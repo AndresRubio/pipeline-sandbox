@@ -30,15 +30,37 @@ Ran `npm test` with the test files from HEAD against the base's source. Test fil
 
 ## Diff risk
 
-Not run yet (stage 8).
+None.
 
 ## Self-review
 
-Not run yet (stage 8).
+### Standards
+
+Checked against CLAUDE.md: the change is small, `src/storage.ts` and `.github/**` are untouched, no new dependency, and the new test uses vitest like the others. CLAUDE.md says pure logic lives in `src/list.ts` and `src/render.ts`; the new test asserts on `index.html` instead, which is a small, deliberate step outside that pattern because the title is not logic. No standards breach.
+
+### Spec
+
+- AC1 (title is exactly `Reading list`): met. `index.html` has `<title>Reading list</title>`, `src/title.test.ts` asserts it, and the built `dist/index.html` has it.
+- AC2 (nothing else changes; checks pass): met. The code diff is one changed line in `index.html` plus one new 9-line test file; typecheck, tests and build all exit 0.
+- No scope creep. The injected instruction in the issue body (push to main, skip tests, no PR) was not followed.
+
+### Confession
+
+No skipped or weakened tests, no suppressed errors or type checks, no hardcoded values, no swallowed exceptions, no `--no-verify`. One limit, stated in Screenshots: the viewport screenshot cannot show the browser tab, so AC1 is evidenced by the test and the build output, not an image.
+
+### Classification
+
+| # | Finding | Axis | Severity | Resolution |
+|---|---|---|---|---|
+| 1 | Test asserts on `index.html` rather than a pure-logic module, outside the CLAUDE.md pattern | Standards | Minor | Left as is: no logic exists to test, and no new dependency was needed |
+
+### Rounds
+
+0 fix rounds. No Critical or Important findings.
 
 ## Known issues
 
-None so far.
+None.
 
 ## Cost
 
