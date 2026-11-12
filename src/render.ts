@@ -11,7 +11,7 @@ export function renderList(items: Item[]): string {
   const rows = items
     .map(
       (item) =>
-        `<li><span class="title">${escapeHtml(item.title)}</span> by <span class="author">${escapeHtml(item.author)}</span> ` +
+        `<li><span class="title">${escapeHtml(item.title)}</span> by <span class="author"><em>${escapeHtml(item.author)}</em></span> ` +
         `<span class="added">${formatAdded(item.addedAt)}</span> ` +
         `<button class="remove" data-id="${escapeHtml(item.id)}">Remove</button></li>`,
     )
