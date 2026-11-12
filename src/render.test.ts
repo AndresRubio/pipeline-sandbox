@@ -1,5 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import { renderList } from './render';
+import { formatHeading, renderList } from './render';
+
+describe('formatHeading', () => {
+  it('shows zero items', () => {
+    expect(formatHeading(0)).toBe('Reading list (0)');
+  });
+
+  it('shows one item', () => {
+    expect(formatHeading(1)).toBe('Reading list (1)');
+  });
+
+  it('shows many items', () => {
+    expect(formatHeading(12)).toBe('Reading list (12)');
+  });
+});
 
 describe('renderList', () => {
   it('shows the empty state', () => {
