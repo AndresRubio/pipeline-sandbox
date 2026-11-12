@@ -1,0 +1,50 @@
+# Progress — 1
+
+## Run
+
+| Variable | Value |
+|---|---|
+| KEY | 1 |
+| NUMBER | 1 |
+| REPO | AndresRubio/pipeline-sandbox |
+| REPO_ROOT | /home/runner/work/pipeline-sandbox/pipeline-sandbox |
+| BRANCH | pipeline/1-added-dates-show-the-wrong-month |
+| WT | /home/runner/work/pipeline-sandbox/pipeline-sandbox |
+| BASE_REF | origin/main |
+| BASE_SHA | 321d592d114051dc3b9ccc0e056e42a863e86a55 |
+| MODE | auto |
+| LANE | github |
+| TASKS | 1 |
+
+## Stages
+
+- [x] 0 Resolve and lock
+- [x] 1 Isolate
+- [x] 2 Research
+- [x] 3 Grade
+- [x] 4 Spec
+- [x] 5 Plan
+- [x] 6 Build
+- [x] 7 Verify
+- [x] 8 Self-review
+- [ ] 9 Finish
+- [ ] 10 Report
+
+## Tasks
+
+One line per finished task: `Task N — summary — <commit sha>`.
+
+Task 1 — fix formatAdded month off-by-one, add formatAdded tests — c8b36be
+
+### Bug reproduction
+
+- Test: `src/list.test.ts` > `formatAdded` (three cases)
+- Command: `npx vitest run --dir src --exclude '.issue-pipeline-plugin/**' --reporter=dot`
+- Log: `$RUN_DIR/logs/build-repro.log` (a run-local path, not committed)
+- Failing output before the fix: `expected '25 Oct 2026' to be '25 Sep 2026'`, `expected '3 undefined 2026' to be '3 Dec 2026'`, `expected '15 Feb 2026' to be '15 Jan 2026'`
+- Cause: `MONTHS[date.getUTCMonth() + 1]` in `formatAdded`; `getUTCMonth()` is already 0-based. Single hypothesis, confirmed by the fix turning all three green.
+
+## Known issues
+
+- The runner's checkout holds an untracked `.issue-pipeline-plugin/` directory containing its own test files. Plain `npm test` picks them up and fails (59 files, none from this repo). Local checks run the repo's own tests with `npx vitest run --dir src --exclude '.issue-pipeline-plugin/**'`. A clean CI checkout has no such directory, so `npm test` there is equivalent. Never commit `.issue-pipeline-plugin/`.
+- A second `lock` comment was posted at stage 0: the workflow had already posted one for this same Actions run. Harmless duplicate.
