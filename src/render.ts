@@ -18,3 +18,7 @@ export function renderList(items: Item[]): string {
     .join('');
   return `<ul class="items">${rows}</ul>`;
 }
+
+export function formatHeading(count: number): string {
+  return `Reading list (${count})`;
+}
