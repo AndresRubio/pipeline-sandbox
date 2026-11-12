@@ -3,7 +3,14 @@ import { renderList } from './render';
 
 describe('renderList', () => {
   it('shows the empty state', () => {
-    expect(renderList([])).toContain('No items.');
+    const html = renderList([]);
+    expect(html).toContain('Your reading list is empty — add your first book above.');
+    expect(html).not.toContain('No items.');
+  });
+
+  it('hides the empty state when there are items', () => {
+    const html = renderList([{ id: '1', title: 'T', author: 'A', addedAt: '2026-03-01T10:00:00.000Z' }]);
+    expect(html).not.toContain('Your reading list is empty');
   });
 
   it('escapes titles', () => {

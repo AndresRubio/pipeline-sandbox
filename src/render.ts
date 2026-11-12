@@ -7,7 +7,7 @@ function escapeHtml(text: string): string {
 }
 
 export function renderList(items: Item[]): string {
-  if (items.length === 0) return '<p class="empty">No items.</p>';
+  if (items.length === 0) return '<p class="empty">Your reading list is empty — add your first book above.</p>';
   const rows = items
     .map(
       (item) =>
