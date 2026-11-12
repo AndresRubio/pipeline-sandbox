@@ -33,3 +33,4 @@
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+Task 1 — add sortByTitle with unit tests — f094ee7
