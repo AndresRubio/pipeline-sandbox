@@ -24,7 +24,7 @@
 - [x] 3 Grade
 - [x] 4 Spec
 - [x] 5 Plan
-- [ ] 6 Build
+- [x] 6 Build
 - [ ] 7 Verify
 - [ ] 8 Self-review
 - [ ] 9 Finish
@@ -35,3 +35,4 @@
 One line per finished task: `Task N — summary — <commit sha>`.
 
 Task 1 — formatHeading pure formatter with unit tests — dd98e6b
+Task 2 — wire the heading into refresh() — f67f0ac
