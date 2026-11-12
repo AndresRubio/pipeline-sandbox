@@ -33,3 +33,5 @@
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+
+Task 1 — formatHeading pure formatter with unit tests — dd98e6b

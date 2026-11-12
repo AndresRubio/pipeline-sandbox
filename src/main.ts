@@ -1,13 +1,15 @@
 import './style.css';
 import { addItem, removeItem, type Item } from './list';
-import { renderList } from './render';
+import { formatHeading, renderList } from './render';
 import { load, save } from './storage';
 
 let items: Item[] = load(localStorage);
 const listEl = document.querySelector<HTMLDivElement>('#list')!;
+const headingEl = document.querySelector<HTMLHeadingElement>('h1')!;
 const form = document.querySelector<HTMLFormElement>('#add-form')!;
 
 function refresh(): void {
+  headingEl.textContent = formatHeading(items.length);
   listEl.innerHTML = renderList(items);
   save(localStorage, items);
 }
