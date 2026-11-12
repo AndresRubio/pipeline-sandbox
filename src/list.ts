@@ -18,6 +18,10 @@ export function removeItem(items: Item[], id: string): Item[] {
   return items.filter((item) => item.id !== id);
 }
 
+export function sortByTitle(items: Item[]): Item[] {
+  return [...items].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+}
+
 export function formatAdded(iso: string): string {
   const date = new Date(iso);
   return `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;

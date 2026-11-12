@@ -1,4 +1,4 @@
-# issue-pipeline: GitHub lane (spec §6.2). Installed by /issue-pipeline:setup; pinned to issue-pipeline--v0.3.6.
+# issue-pipeline: GitHub lane (spec §6.2). Installed by /issue-pipeline:setup; pinned to issue-pipeline--v0.3.7.
 name: pipeline-ship
 on:
   issues:
@@ -33,7 +33,7 @@ jobs:
     steps:
       # Cloned outside the workspace: inside it, the repo's own test runner would collect the plugin's tests.
       - name: Fetch the pinned plugin
-        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.6 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
+        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.7 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -67,7 +67,7 @@ jobs:
       - run: git remote set-head origin --auto
       # Cloned outside the workspace: inside it, the repo's own test runner would collect the plugin's tests.
       - name: Fetch the pinned plugin
-        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.6 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
+        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.7 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -90,6 +90,12 @@ jobs:
           # claude-code-action takes a comma-separated list. A sweep dispatch made with the default
           # github.token runs as github-actions[bot], which the action refuses unless it is listed.
           allowed_bots: "claude[bot],github-actions[bot]"
+          # The action denies node, npm and shells on a pull request whose author has no write access,
+          # and it counts every bot as one. A fix run started by the pipeline-fix label is a pull
+          # request event on a pull request a bot opened, so with the default on it cannot call the
+          # pipeline CLI. It is off here because the router lets through only a pipeline/* branch of
+          # this repository. Do not route other pull requests to this job while this stays off.
+          restrict_untrusted_prs: "false"
           prompt: ${{ needs.route.outputs.prompt }}
           # The agent loads the pinned clone above, so its skills, stages and hooks match the CLI it calls.
           claude_args: |
