@@ -30,26 +30,40 @@ None.
 
 ## Diff risk
 
-(Filled in at stage 8.)
+None. `diff-risk` reported no hits against the base.
 
 ## Self-review
 
 ### Standards
 
+Reviewed against CLAUDE.md: the change keeps pure logic in `src/render.ts` and tests it in `src/render.test.ts`; `src/main.ts` is untouched and the protected `src/storage.ts` is not touched. The diff is 3 files and 12 lines, inside `maxPrSize`. Only baseline smell: `#777` now appears in two rules (`.added` and `.empty`); a shared variable would be more change than this issue warrants.
+
 ### Spec
 
+- AC1: met. `renderList([])` returns exactly the issue's message (unit test, and the screenshot).
+- AC2: met under the recorded assumption A2: the message is centred in the form's box (the 40rem column). The form's controls only fill the left part of that box, so the text looks shifted right of the inputs (see Screenshots). A reading of "centred under the visible inputs" would need a layout change the issue doesn't ask for.
+- AC3: met. Unit test `hides the empty state when there are items`.
+- AC4: met. `color: #777`, matching the existing muted text (A1).
+- No behaviour beyond the issue was added.
+
 ### Confession
+
+No skipped or weakened tests, no suppressed errors or type checks, no swallowed exceptions, no `--no-verify`. The exact message string appears in the test and in the code, but it is the text the issue specifies, not a value hardcoded to pass a test. The revert check confirms the new test fails against the base.
 
 ### Classification
 
 | # | Finding | Axis | Severity | Resolution |
 |---|---|---|---|---|
+| 1 | Message is centred in the form's box, not under the visible inputs; looks right-shifted | Spec (AC2, interpretation) | Minor | Kept per assumption A2, which was posted on the issue for correction. My own judgement call: the owner may rate it higher, and the fix is a form layout change. |
+| 2 | `#777` repeated in two rules | Standards | Minor | Left as is |
 
 ### Rounds
 
+0 fix rounds. No Critical or Important findings.
+
 ## Known issues
 
-None so far.
+None (Important or above). Finding 1 above is a Minor interpretation question about AC2, flagged for the owner.
 
 ## Cost
 
