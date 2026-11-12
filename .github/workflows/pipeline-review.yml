@@ -28,7 +28,7 @@ jobs:
       - run: git remote set-head origin --auto
       # Cloned outside the workspace: inside it, the repo's own test runner would collect the plugin's tests.
       - name: Fetch the pinned plugin
-        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.6 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
+        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.7 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -49,6 +49,12 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_bots: "claude[bot]"
+          # The action denies node, npm and shells on a pull request whose author has no write access,
+          # and it counts every bot as one. The pipeline's pull requests are opened by a bot, so with
+          # the default on the review cannot call the pipeline CLI or re-run the evidence. It is off
+          # here because the job's `if` already limits it to pipeline/* branches of this repository,
+          # whose code the ship run wrote and ran. Do not widen that `if` while this stays off.
+          restrict_untrusted_prs: "false"
           prompt: "/issue-pipeline:review ${{ github.event.pull_request.number }} --head ${{ github.event.pull_request.head.sha }}"
           # The agent loads the pinned clone above, so its skills, stages and hooks match the CLI it calls.
           claude_args: |
