@@ -1,4 +1,4 @@
-import { formatAdded, type Item } from './list';
+import { formatAdded, sortByTitle, type Item } from './list';
 
 const ENTITIES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 
@@ -8,7 +8,7 @@ function escapeHtml(text: string): string {
 
 export function renderList(items: Item[]): string {
   if (items.length === 0) return '<p class="empty">Your reading list is empty — add your first book above.</p>';
-  const rows = items
+  const rows = sortByTitle(items)
     .map(
       (item) =>
         `<li><span class="title">${escapeHtml(item.title)}</span> by <span class="author"><em>${escapeHtml(item.author)}</em></span> ` +

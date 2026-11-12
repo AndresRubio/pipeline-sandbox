@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addItem, formatAdded, removeItem } from './list';
+import { addItem, formatAdded, removeItem, sortByTitle, type Item } from './list';
 
 const now = new Date('2026-03-01T10:00:00Z');
 
@@ -19,6 +19,31 @@ describe('removeItem', () => {
   it('removes only the item with the id', () => {
     const items = addItem(addItem([], { title: 'A', author: 'X' }, now, '1'), { title: 'B', author: 'Y' }, now, '2');
     expect(removeItem(items, '1').map((i) => i.id)).toEqual(['2']);
+  });
+});
+
+describe('sortByTitle', () => {
+  const book = (id: string, title: string, author = 'X'): Item => ({
+    id,
+    title,
+    author,
+    addedAt: '2026-03-01T10:00:00.000Z',
+  });
+
+  it('orders titles alphabetically, ignoring case', () => {
+    const sorted = sortByTitle([book('1', 'Zebra'), book('2', 'apple'), book('3', 'Mango')]);
+    expect(sorted.map((i) => i.title)).toEqual(['apple', 'Mango', 'Zebra']);
+  });
+
+  it('keeps the added order for equal titles', () => {
+    const sorted = sortByTitle([book('d1', 'Dune', 'A'), book('x', 'Axe'), book('d2', 'Dune', 'B'), book('d3', 'dune', 'C')]);
+    expect(sorted.map((i) => i.id)).toEqual(['x', 'd1', 'd2', 'd3']);
+  });
+
+  it('does not change the order of its input', () => {
+    const items = [book('1', 'Zebra'), book('2', 'apple')];
+    sortByTitle(items);
+    expect(items.map((i) => i.id)).toEqual(['1', '2']);
   });
 });
 
