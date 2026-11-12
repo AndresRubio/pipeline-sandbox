@@ -24,7 +24,7 @@
 - [x] 3 Grade
 - [x] 4 Spec
 - [x] 5 Plan
-- [ ] 6 Build
+- [x] 6 Build
 - [ ] 7 Verify
 - [ ] 8 Self-review
 - [ ] 9 Finish
@@ -33,3 +33,4 @@
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+Task 1 — Render the author inside `<em>` with a covering test — 4b090f7
