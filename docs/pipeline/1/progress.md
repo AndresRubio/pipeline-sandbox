@@ -24,7 +24,7 @@
 - [x] 3 Grade
 - [x] 4 Spec
 - [x] 5 Plan
-- [ ] 6 Build
+- [x] 6 Build
 - [ ] 7 Verify
 - [ ] 8 Self-review
 - [ ] 9 Finish
@@ -33,6 +33,16 @@
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+
+Task 1 — fix formatAdded month off-by-one, add formatAdded tests — c8b36be
+
+### Bug reproduction
+
+- Test: `src/list.test.ts` > `formatAdded` (three cases)
+- Command: `npx vitest run --dir src --exclude '.issue-pipeline-plugin/**' --reporter=dot`
+- Log: `$RUN_DIR/logs/build-repro.log` (a run-local path, not committed)
+- Failing output before the fix: `expected '25 Oct 2026' to be '25 Sep 2026'`, `expected '3 undefined 2026' to be '3 Dec 2026'`, `expected '15 Feb 2026' to be '15 Jan 2026'`
+- Cause: `MONTHS[date.getUTCMonth() + 1]` in `formatAdded`; `getUTCMonth()` is already 0-based. Single hypothesis, confirmed by the fix turning all three green.
 
 ## Known issues
 
