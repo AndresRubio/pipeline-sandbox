@@ -24,7 +24,7 @@
 - [x] 3 Grade
 - [x] 4 Spec
 - [x] 5 Plan
-- [ ] 6 Build
+- [x] 6 Build
 - [ ] 7 Verify
 - [ ] 8 Self-review
 - [ ] 9 Finish
@@ -34,3 +34,4 @@
 
 One line per finished task: `Task N — summary — <commit sha>`.
 Task 1 — add sortByTitle with unit tests — f094ee7
+Task 2 — render the list sorted by title — 889d65d
