@@ -14,7 +14,7 @@
 | BASE_SHA | 9fcdd2fb8aa8b7b7ac1f0b2e81187f5106e1bab8 |
 | MODE | auto |
 | LANE | github |
-| TASKS | |
+| TASKS | 1 |
 
 ## Stages
 
@@ -23,7 +23,7 @@
 - [x] 2 Research
 - [x] 3 Grade
 - [x] 4 Spec
-- [ ] 5 Plan
+- [x] 5 Plan
 - [ ] 6 Build
 - [ ] 7 Verify
 - [ ] 8 Self-review
