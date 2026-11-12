@@ -24,7 +24,7 @@
 - [x] 3 Grade
 - [x] 4 Spec
 - [x] 5 Plan
-- [ ] 6 Build
+- [x] 6 Build
 - [ ] 7 Verify
 - [ ] 8 Self-review
 - [ ] 9 Finish
@@ -33,3 +33,13 @@
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+
+Task 1 — Fix the page title, test-first — dea476b
+
+## Bug reproduction
+
+- Test: `src/title.test.ts`
+- Command: `npm test -- --reporter=dot`
+- Log: `$RUN_DIR/logs/build-repro.log` (not committed)
+- Failing output before the fix: `expected 'Readng List' to be 'Reading list'`
+- Hypotheses: none needed; the typo is a literal in `index.html:6`.
