@@ -1,4 +1,4 @@
-# issue-pipeline: GitHub lane (spec §6.2). Installed by /issue-pipeline:setup; pinned to issue-pipeline--v0.3.4.
+# issue-pipeline: GitHub lane (spec §6.2). Installed by /issue-pipeline:setup; pinned to issue-pipeline--v0.3.5.
 name: pipeline-ship
 on:
   issues:
@@ -33,7 +33,7 @@ jobs:
     steps:
       # Cloned outside the workspace: inside it, the repo's own test runner would collect the plugin's tests.
       - name: Fetch the pinned plugin
-        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.4 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
+        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.5 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -67,7 +67,7 @@ jobs:
       - run: git remote set-head origin --auto
       # Cloned outside the workspace: inside it, the repo's own test runner would collect the plugin's tests.
       - name: Fetch the pinned plugin
-        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.4 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
+        run: git -c advice.detachedHead=false clone --quiet --depth 1 --branch issue-pipeline--v0.3.5 https://github.com/AndresRubio/andres-skills.git "$RUNNER_TEMP/issue-pipeline-plugin"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
