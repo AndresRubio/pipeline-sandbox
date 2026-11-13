@@ -37,3 +37,8 @@ Owner (trusted) commented `pipeline-go` on the issue after the earlier `question
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+
+## SDD ledger
+
+- Task 1 — i18n module (dictionary, resolveLang, load/save) — fa4b73a
+- Task 2 — localised dates (formatAdded lang) — d03e755

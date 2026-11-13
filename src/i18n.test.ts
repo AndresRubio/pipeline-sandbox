@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { formatAdded } from './list';
+import { formatHeading, renderList } from './render';
 import { LANG_KEY, STRINGS, loadLang, resolveLang, saveLang } from './i18n';
 
 function fakeStorage(initial: Record<string, string> = {}) {
@@ -92,5 +93,19 @@ describe('formatAdded', () => {
       expect(formatAdded(iso, 'en')).toBe(`25 ${abbr.en[i]} 2026`);
       expect(formatAdded(iso)).toBe(`25 ${abbr.en[i]} 2026`);
     });
+  });
+});
+
+describe('render in Spanish', () => {
+  const item = { id: 'a', title: 'Dune', author: 'Herbert', addedAt: '2026-09-25T12:00:00.000Z' };
+  it('localises list, empty state and heading', () => {
+    expect(renderList([], 'es')).toContain('No hay libros.');
+    const es = renderList([item], 'es');
+    for (const s of [' de ', 'Quitar', '25 sep 2026']) expect(es).toContain(s);
+    for (const s of [' by ', 'Remove']) expect(es).not.toContain(s);
+    expect(renderList([item])).toBe(renderList([item], 'en'));
+    expect(renderList([{ ...item, title: '<b>x</b>' }], 'es')).toContain('&lt;b&gt;');
+    expect(formatHeading(2, 'es')).toBe('Lista de lectura (2)');
+    expect(formatHeading(2)).toBe('Reading list (2)');
   });
 });
