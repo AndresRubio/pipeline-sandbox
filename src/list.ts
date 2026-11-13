@@ -22,6 +22,12 @@ export function sortByTitle(items: Item[]): Item[] {
   return [...items].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
 }
 
+/**
+ * Formats an ISO timestamp as the day of the month, the short month name and
+ * the four-digit year, separated by spaces, e.g. `25 Sep 2026`. The date is
+ * read in UTC, so the result doesn't depend on the local time zone. The month
+ * name is in the language given by `lang` (English by default).
+ */
 export function formatAdded(iso: string, lang: Lang = 'en'): string {
   const date = new Date(iso);
   return `${date.getUTCDate()} ${STRINGS[lang].months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
