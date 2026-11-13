@@ -82,4 +82,13 @@ describe('countByAuthor', () => {
     const items = [byAuthor('1', 'Le Guin'), byAuthor('2', 'le guin'), byAuthor('3', 'Le Guin ')];
     expect(countByAuthor(items)).toEqual({ 'Le Guin': 1, 'le guin': 1, 'Le Guin ': 1 });
   });
+
+  it.each(['__proto__', 'constructor', 'toString'])('counts an author named %s like any other', (name) => {
+    const items = [byAuthor('1', name), byAuthor('2', 'Tolkien'), byAuthor('3', name)];
+    const result = countByAuthor(items);
+    expect(Object.keys(result).sort()).toEqual([name, 'Tolkien'].sort());
+    expect(Object.hasOwn(result, name)).toBe(true);
+    expect(Object.getOwnPropertyDescriptor(result, name)?.value).toBe(2);
+    expect(result['Tolkien']).toBe(1);
+  });
 });

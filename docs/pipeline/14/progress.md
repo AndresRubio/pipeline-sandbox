@@ -33,3 +33,5 @@
 ## Tasks
 
 One line per finished task: `Task N — summary — <commit sha>`.
+
+Task 1 — countByAuthor with tests for AC1–AC3 — 6416765
