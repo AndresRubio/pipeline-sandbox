@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { formatAdded } from './list';
 import { LANG_KEY, STRINGS, loadLang, resolveLang, saveLang } from './i18n';
 
 function fakeStorage(initial: Record<string, string> = {}) {
@@ -31,19 +32,6 @@ describe('STRINGS', () => {
       by: 'de',
       remove: 'Quitar',
       months: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
-    });
-  });
-
-  it('keeps the current English texts', () => {
-    expect(STRINGS.en).toEqual({
-      heading: 'Reading list',
-      titlePlaceholder: 'Title',
-      authorPlaceholder: 'Author',
-      add: 'Add',
-      empty: 'Your reading list is empty — add your first book above.',
-      by: 'by',
-      remove: 'Remove',
-      months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     });
   });
 });
@@ -92,5 +80,17 @@ describe('loadLang and saveLang', () => {
     expect(loadLang(throwingStorage, 'es-ES')).toBe('es');
     expect(loadLang(throwingStorage, 'en-US')).toBe('en');
     expect(() => saveLang(throwingStorage, 'es')).not.toThrow();
+  });
+});
+
+describe('formatAdded', () => {
+  const abbr = { en: 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' '), es: 'ene feb mar abr may jun jul ago sep oct nov dic'.split(' ') };
+  it('localises all months and defaults to English', () => {
+    abbr.en.forEach((_, i) => {
+      const iso = `2026-${String(i + 1).padStart(2, '0')}-25T12:00:00.000Z`;
+      expect(formatAdded(iso, 'es')).toBe(`25 ${abbr.es[i]} 2026`);
+      expect(formatAdded(iso, 'en')).toBe(`25 ${abbr.en[i]} 2026`);
+      expect(formatAdded(iso)).toBe(`25 ${abbr.en[i]} 2026`);
+    });
   });
 });

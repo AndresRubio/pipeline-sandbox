@@ -1,11 +1,11 @@
+import { STRINGS, type Lang } from './i18n';
+
 export interface Item {
   id: string;
   title: string;
   author: string;
   addedAt: string;
 }
-
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function addItem(items: Item[], input: { title: string; author: string }, now: Date, id: string): Item[] {
   const title = input.title.trim();
@@ -22,7 +22,7 @@ export function sortByTitle(items: Item[]): Item[] {
   return [...items].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
 }
 
-export function formatAdded(iso: string): string {
+export function formatAdded(iso: string, lang: Lang = 'en'): string {
   const date = new Date(iso);
-  return `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+  return `${date.getUTCDate()} ${STRINGS[lang].months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }
