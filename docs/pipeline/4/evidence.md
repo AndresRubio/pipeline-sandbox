@@ -5,9 +5,10 @@
 | Command | Exit | Last lines |
 |---|---|---|
 | `npm run typecheck` (log: `$RUN_DIR/logs/verify-1.log`) | 0 | clean |
-| `npm test -- --reporter=dot` (log: `$RUN_DIR/logs/verify-2.log`) | 0 | 4 files, 32 tests passed |
-| `npm run build` (log: `$RUN_DIR/logs/verify-3.log`) | 0 | built in 135ms |
-| Browser check: headless Chrome driven over the DevTools protocol by a script kept outside the repo (log: `$RUN_DIR/logs/verify-cdp.log`, results: `$RUN_DIR/cdp-results.json`) | 0 | see Screenshots |
+| `npm test -- --reporter=dot` (log: `$RUN_DIR/logs/verify-2.log`) | 0 | 4 files, 36 tests passed |
+| `npm run build` (log: `$RUN_DIR/logs/verify-3.log`) | 0 | built |
+
+Fix run (reviewer findings on head 476376e): all three commands re-run fresh after the fixes; typecheck clean, 4 files and 36 tests passed, build built. The browser observations below are not a command: they are narrative from a one-off manual run, not repeatable from the repo.
 
 ## Visible change
 
@@ -20,7 +21,7 @@ Yes. The page gets a language switcher in a new header, and the heading, placeho
 - `screenshots/3-spanish-with-book.png` — Spanish with one book: "Lista de lectura (1)", "Título" and "Autor" placeholders, "Añadir", "de" between title and author, date "13 nov 2026", "Quitar" — AC2, AC4.
 - `screenshots/4-switched-to-english.png` — the same page after clicking "English": all text back in English, the book and its date kept ("13 Nov 2026") — AC6.
 
-What the browser script observed (also in `$RUN_DIR/cdp-results.json`):
+What was observed in headless Chrome during the original run (narrative only; the script was kept outside the repo, so a reviewer can't repeat it, and the fix run changed no rendered output, so the screenshots above still apply):
 
 - Browser locale `es-ES`, nothing stored: Spanish, "Español" `aria-pressed=true`, "English" `aria-pressed=false`, nothing stored yet (AC8, AC5).
 - Text typed in the title field and a click on "English": every text switched, the typed text `half typed` stayed in the field, and `reading-list.lang` became `en` (AC6, AC7).
@@ -61,16 +62,28 @@ None found: no skipped or weakened tests, no suppressed errors or type checks, n
 | # | Finding | Axis | Severity | Resolution |
 |---|---|---|---|---|
 | 1 | The new pure module `src/i18n.ts` is outside the two files CLAUDE.md names for pure logic | Standards | Minor | Accepted: the spec chose it and it is unit-tested |
-| 2 | Dictionary strings go into the HTML without escaping (`src/render.ts`) | Standards | Minor | Accepted: they are constants; a future translation with `&` or `<` would need escaping |
-| 3 | Each language click also re-saves the books (`refresh()` calls `save`) | Standards | Minor | Accepted: same data, harmless |
-| 4 | One Spanish render test packs about ten checks into one `it` (`src/i18n.test.ts`) | Standards | Minor | Accepted: kept compact for the PR size limit |
-| 5 | The static HTML is English, so a Spanish-locale user briefly sees English before the script runs | Spec | Minor | Accepted: follows A5 and A7 |
+| 2 | Dictionary strings go into the HTML without escaping (`src/render.ts`) | Standards | Minor | Fixed in the fix run: `t.empty`, `t.by` and `t.remove` now pass through `escapeHtml` (output unchanged for today's strings) |
+| 3 | Each language click also re-saves the books (`refresh()` calls `save`) | Standards | Minor | Fixed in the fix run: the language click calls a new `render()`; only add, remove and the first load save |
+| 4 | One Spanish render test packs about ten checks into one `it` (`src/i18n.test.ts`) | Standards | Minor | Fixed in the fix run: split into five `it`s, one per behaviour |
+| 5 | The static HTML is English, so a Spanish-locale user briefly sees English before the script runs | Spec | Minor | Declined: the reviewer said no change is required; follows A5 and A7. A follow-up could hide `main` until `applyLang()` has run |
 | 6 | The English dictionary is not checked directly; only the English render output and months are pinned by tests | Spec | Minor | Accepted: see Confession |
 | 7 | The switcher renders under the heading, not beside it | Spec | Minor | Accepted: follows A7; recorded under Departures |
 
+### Fix run (reviewer verdict: revision needed, head 476376e)
+
+Work list from the verdict, all unambiguous:
+
+1. Important, `evidence.md` browser row not re-runnable: fixed. The row is out of the Commands table; the browser observations stay as narrative under Screenshots, labelled as a one-off run that can't be repeated from the repo.
+2. Minor, dictionary strings unescaped: fixed (commit c8f1655).
+3. Minor, redundant save on language click: fixed (commit c8f1655).
+4. Minor, static English markup flash: declined, as the reviewer said no change is required (A5, A7).
+5. Minor, one Spanish test with about ten assertions: fixed (commit c8f1655).
+
+Fix-run review of the new commit: no skipped or weakened tests (36 tests pass, 4 more than before, from the split), no suppressed errors, no hardcoded values, no `--no-verify`. The diff-risk check has no hits. PR size is 244 changed lines in 6 files outside `docs/pipeline/`, within `maxPrSize`. `src/storage.ts` is untouched.
+
 ### Rounds
 
-0 fix rounds. No Critical or Important findings.
+0 fix rounds in the original run and 0 in the fix run's self-review. No Critical or Important findings left.
 
 ## Known issues
 

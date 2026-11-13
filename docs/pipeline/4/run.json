@@ -115,6 +115,78 @@
         "testFiles": 1
       },
       "scores": null
+    },
+    {
+      "key": "4",
+      "runId": "https://github.com/AndresRubio/pipeline-sandbox/actions/runs/43427718047",
+      "lane": "github",
+      "mode": "auto",
+      "kind": "fix",
+      "pluginVersion": "0.3.7",
+      "sessionEffort": "high",
+      "stages": [
+        {
+          "stage": "fix",
+          "model": "session",
+          "effort": "session",
+          "startedAt": "2026-11-13T12:45:02Z",
+          "seconds": 72
+        },
+        {
+          "stage": "7",
+          "model": "sonnet",
+          "effort": "medium",
+          "startedAt": "2026-11-13T12:46:14Z",
+          "seconds": 22
+        },
+        {
+          "stage": "8",
+          "model": "strongest",
+          "effort": "high",
+          "startedAt": "2026-11-13T12:46:36Z",
+          "seconds": 15
+        },
+        {
+          "stage": "fix",
+          "model": "session",
+          "effort": "session",
+          "startedAt": "2026-11-13T12:46:51Z",
+          "seconds": 0
+        }
+      ],
+      "startedAt": "2026-11-13T12:45:02Z",
+      "finishedAt": "2026-11-13T12:46:51Z",
+      "seconds": 109,
+      "tokens": {
+        "input": 54,
+        "output": 13192,
+        "cacheRead": 1181846,
+        "cacheWrite": 40394,
+        "subagents": 0
+      },
+      "contextPeak": 61395,
+      "pausesOverCacheTtl": 0,
+      "usd": 0.411789,
+      "usdSubagents": 0,
+      "models": [
+        "claude-sonnet-5-5"
+      ],
+      "unpriced": [],
+      "outcome": {
+        "grade": null,
+        "fixRunsBefore": 0,
+        "reviewVerdict": "revision-needed",
+        "stoppedAt": null,
+        "readyAt": null,
+        "mergedAt": null,
+        "closedAt": null
+      },
+      "size": {
+        "files": 6,
+        "lines": 244,
+        "testFiles": 1
+      },
+      "scores": null
     }
   ]
 }
