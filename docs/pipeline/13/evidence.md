@@ -26,26 +26,38 @@ None.
 
 ## Diff risk
 
-(Filled in at stage 8.)
+None.
 
 ## Self-review
 
 ### Standards
 
+Matches the repo's conventions (CLAUDE.md): a change to `index.html` plus a unit test beside the existing title test, the same raw-import pattern, the file's self-closing meta style. Small diff (2 files, 7 lines). No standard broken.
+
 ### Spec
 
+- AC1 met: exactly one `<meta name="description" content="A small reading list." />` in `<head>`, checked by the new test (fails against the base, passes now).
+- AC2 met: the `index.html` diff is the single added line.
+- A1 followed: the tag sits directly after `<title>`.
+- No behaviour beyond the spec.
+
 ### Confession
+
+No skipped or weakened tests, no suppressed errors or type checks, no hardcoded values to pass a test, no swallowed exceptions, no `--no-verify`. The only literal is the description text, which the issue gives verbatim. Minor limitation, not a finding: the test's regex expects `name` before `content`, so a differently ordered tag would not be counted; the tag here is in the order the issue specifies.
 
 ### Classification
 
 | # | Finding | Axis | Severity | Resolution |
 |---|---|---|---|---|
+| - | No findings | - | - | - |
 
 ### Rounds
 
+0 fix rounds; nothing to fix.
+
 ## Known issues
 
-None so far.
+None.
 
 ## Cost
 
