@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addItem, formatAdded, removeItem, sortByTitle, type Item } from './list';
+import { addItem, countByAuthor, formatAdded, removeItem, sortByTitle, type Item } from './list';
 
 const now = new Date('2026-03-01T10:00:00Z');
 
@@ -58,5 +58,28 @@ describe('formatAdded', () => {
 
   it('shows January for the first month of the year', () => {
     expect(formatAdded('2026-01-15T10:00:00.000Z')).toBe('15 Jan 2026');
+  });
+});
+
+describe('countByAuthor', () => {
+  const byAuthor = (id: string, author: string): Item => ({
+    id,
+    title: 'Title',
+    author,
+    addedAt: '2026-03-01T10:00:00.000Z',
+  });
+
+  it('returns an empty object for no items', () => {
+    expect(countByAuthor([])).toEqual({});
+  });
+
+  it('counts how many items each author has', () => {
+    const items = [byAuthor('1', 'Le Guin'), byAuthor('2', 'Tolkien'), byAuthor('3', 'Le Guin')];
+    expect(countByAuthor(items)).toEqual({ 'Le Guin': 2, Tolkien: 1 });
+  });
+
+  it('compares authors exactly as stored', () => {
+    const items = [byAuthor('1', 'Le Guin'), byAuthor('2', 'le guin'), byAuthor('3', 'Le Guin ')];
+    expect(countByAuthor(items)).toEqual({ 'Le Guin': 1, 'le guin': 1, 'Le Guin ': 1 });
   });
 });
