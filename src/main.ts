@@ -23,9 +23,13 @@ function applyLang(): void {
   });
 }
 
-function refresh(): void {
+function render(): void {
   headingEl.textContent = formatHeading(items.length, lang);
   listEl.innerHTML = renderList(items, lang);
+}
+
+function refresh(): void {
+  render();
   save(localStorage, items);
 }
 
@@ -56,7 +60,7 @@ switchEl.addEventListener('click', (event) => {
   lang = next;
   saveLang(localStorage, lang);
   applyLang();
-  refresh();
+  render();
 });
 
 applyLang();

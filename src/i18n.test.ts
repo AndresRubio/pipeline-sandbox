@@ -98,13 +98,21 @@ describe('formatAdded', () => {
 
 describe('render in Spanish', () => {
   const item = { id: 'a', title: 'Dune', author: 'Herbert', addedAt: '2026-09-25T12:00:00.000Z' };
-  it('localises list, empty state and heading', () => {
+  it('localises the empty state', () => {
     expect(renderList([], 'es')).toContain('No hay libros.');
+  });
+  it('localises a list row and drops the English words', () => {
     const es = renderList([item], 'es');
     for (const s of [' de ', 'Quitar', '25 sep 2026']) expect(es).toContain(s);
     for (const s of [' by ', 'Remove']) expect(es).not.toContain(s);
+  });
+  it('renders English by default', () => {
     expect(renderList([item])).toBe(renderList([item], 'en'));
+  });
+  it('still escapes user text', () => {
     expect(renderList([{ ...item, title: '<b>x</b>' }], 'es')).toContain('&lt;b&gt;');
+  });
+  it('localises the heading', () => {
     expect(formatHeading(2, 'es')).toBe('Lista de lectura (2)');
     expect(formatHeading(2)).toBe('Reading list (2)');
   });
