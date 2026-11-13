@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "runs": [
+    {
+      "key": "17",
+      "runId": "https://github.com/AndresRubio/pipeline-sandbox/actions/runs/43455082294",
+      "lane": "github",
+      "mode": "auto",
+      "kind": "ship",
+      "pluginVersion": "0.3.8",
+      "sessionEffort": "high",
+      "stages": [
+        {
+          "stage": "0",
+          "model": "haiku",
+          "effort": "low",
+          "startedAt": "2026-11-13T15:41:55Z",
+          "seconds": 27
+        },
+        {
+          "stage": "1",
+          "model": "session",
+          "effort": "session",
+          "startedAt": "2026-11-13T15:42:22Z",
+          "seconds": 16
+        },
+        {
+          "stage": "2",
+          "model": "sonnet",
+          "effort": "medium",
+          "startedAt": "2026-11-13T15:42:38Z",
+          "seconds": 17
+        },
+        {
+          "stage": "3",
+          "model": "strongest",
+          "effort": "high",
+          "startedAt": "2026-11-13T15:42:55Z",
+          "seconds": 13
+        },
+        {
+          "stage": "4",
+          "model": "strongest",
+          "effort": "high",
+          "startedAt": "2026-11-13T15:43:08Z",
+          "seconds": 16
+        },
+        {
+          "stage": "5",
+          "model": "strongest",
+          "effort": "high",
+          "startedAt": "2026-11-13T15:43:24Z",
+          "seconds": 15
+        },
+        {
+          "stage": "6",
+          "model": "sonnet",
+          "effort": "medium",
+          "startedAt": "2026-11-13T15:43:39Z",
+          "seconds": 15
+        },
+        {
+          "stage": "7",
+          "model": "sonnet",
+          "effort": "medium",
+          "startedAt": "2026-11-13T15:43:54Z",
+          "seconds": 11
+        },
+        {
+          "stage": "8",
+          "model": "strongest",
+          "effort": "high",
+          "startedAt": "2026-11-13T15:44:05Z",
+          "seconds": 19
+        },
+        {
+          "stage": "9",
+          "model": "session",
+          "effort": "session",
+          "startedAt": "2026-11-13T15:44:24Z",
+          "seconds": 1
+        }
+      ],
+      "startedAt": "2026-11-13T15:41:55Z",
+      "finishedAt": "2026-11-13T15:44:25Z",
+      "seconds": 150,
+      "tokens": {
+        "input": 78,
+        "output": 18853,
+        "cacheRead": 1898977,
+        "cacheWrite": 54345,
+        "subagents": 0
+      },
+      "contextPeak": 75336,
+      "pausesOverCacheTtl": 0,
+      "usd": 0.595964,
+      "usdSubagents": 0,
+      "models": [
+        "claude-sonnet-5-5"
+      ],
+      "unpriced": [],
+      "outcome": {
+        "grade": "small-gaps",
+        "fixRunsBefore": 0,
+        "reviewVerdict": null,
+        "stoppedAt": null,
+        "readyAt": null,
+        "mergedAt": null,
+        "closedAt": null
+      },
+      "size": {
+        "files": 1,
+        "lines": 6,
+        "testFiles": 0
+      },
+      "scores": null
+    }
+  ]
+}
