@@ -42,3 +42,4 @@ One line per finished task: `Task N — summary — <commit sha>`.
 
 - Task 1 — i18n module (dictionary, resolveLang, load/save) — fa4b73a
 - Task 2 — localised dates (formatAdded lang) — d03e755
+- Task 3 — localised rendering and heading — 2f54896
