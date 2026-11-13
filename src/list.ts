@@ -26,3 +26,11 @@ export function formatAdded(iso: string, lang: Lang = 'en'): string {
   const date = new Date(iso);
   return `${date.getUTCDate()} ${STRINGS[lang].months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }
+
+export function countByAuthor(items: Item[]): Record<string, number> {
+  const counts = new Map<string, number>();
+  for (const { author } of items) {
+    counts.set(author, (counts.get(author) ?? 0) + 1);
+  }
+  return Object.fromEntries(counts);
+}
