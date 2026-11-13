@@ -40,22 +40,37 @@ Test file `src/i18n.test.ts` run against the base's source: exit code 1, `failed
 
 ## Diff risk
 
-Not run yet (stage 8).
+None.
 
 ## Self-review
 
 ### Standards
 
+No documented repo standard is broken: the pure logic is unit-tested, `src/main.ts` only wires the DOM, `src/storage.ts` is untouched and no existing test file changed. Only minor judgement calls (see the table).
+
 ### Spec
 
+AC1 to AC12 are all met. No scope creep and no bugs found: the language value is validated before use and never put into HTML, the dictionary strings are constants, switching keeps typed text, and a click in the gap between the two buttons is ignored. Tests and typecheck were re-run by the reviewer; the build result is the one in Commands above. The switcher renders under the heading instead of beside it (A7, no CSS), as noted under "Departures from spec".
+
 ### Confession
+
+None found: no skipped or weakened tests, no suppressed errors or type checks, no values hardcoded to pass a test, no `--no-verify`. The only exception handling is the intended try/catch in `loadLang` and `saveLang` (AC10). In this run one test I had written (the English strings equality in `src/i18n.test.ts`) was removed to stay under the size limit, because the existing English tests pin the same text; the existing tests were not touched.
 
 ### Classification
 
 | # | Finding | Axis | Severity | Resolution |
 |---|---|---|---|---|
+| 1 | The new pure module `src/i18n.ts` is outside the two files CLAUDE.md names for pure logic | Standards | Minor | Accepted: the spec chose it and it is unit-tested |
+| 2 | Dictionary strings go into the HTML without escaping (`src/render.ts`) | Standards | Minor | Accepted: they are constants; a future translation with `&` or `<` would need escaping |
+| 3 | Each language click also re-saves the books (`refresh()` calls `save`) | Standards | Minor | Accepted: same data, harmless |
+| 4 | One Spanish render test packs about ten checks into one `it` (`src/i18n.test.ts`) | Standards | Minor | Accepted: kept compact for the PR size limit |
+| 5 | The static HTML is English, so a Spanish-locale user briefly sees English before the script runs | Spec | Minor | Accepted: follows A5 and A7 |
+| 6 | The English dictionary is not checked directly; only the English render output and months are pinned by tests | Spec | Minor | Accepted: see Confession |
+| 7 | The switcher renders under the heading, not beside it | Spec | Minor | Accepted: follows A7; recorded under Departures |
 
 ### Rounds
+
+0 fix rounds. No Critical or Important findings.
 
 ## Known issues
 
