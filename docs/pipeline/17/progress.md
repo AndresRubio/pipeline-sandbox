@@ -26,7 +26,7 @@
 - [x] 5 Plan
 - [x] 6 Build
 - [x] 7 Verify
-- [ ] 8 Self-review
+- [x] 8 Self-review
 - [ ] 9 Finish
 - [ ] 10 Report
 
